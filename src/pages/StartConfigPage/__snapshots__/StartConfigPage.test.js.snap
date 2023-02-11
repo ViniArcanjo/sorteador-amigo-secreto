@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StartConfigPage /> deve renderizar todos os componentes na ordem correta 1`] = `
+<div>
+  <div
+    class="content_wrapper"
+  >
+    <form
+      class="form_wrapper"
+    >
+      <h1>
+        Vamos Começar!
+      </h1>
+      <div>
+        <img
+          src="person_add.png"
+        />
+        <input
+          placeholder="Insira o nome dos participantes"
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        disabled=""
+      >
+        Adicionar
+      </button>
+    </form>
+    <ul
+      class="list_wrapper"
+    />
+    <button
+      disabled=""
+    >
+      Iniciar Brincadeira!
+    </button>
+    <img
+      src="sacolas.png"
+    />
+  </div>
+</div>
+`;

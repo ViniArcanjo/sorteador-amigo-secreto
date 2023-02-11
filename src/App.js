@@ -21,6 +21,7 @@ function App() {
                 </Card>
               }
             />
+            <Route path='/sortear' element={<Card></Card>} />
           </Routes>
         </BrowserRouter>
       </FormProvider>

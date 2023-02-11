@@ -56,12 +56,19 @@
         outline: none;
         border: 2px solid #000;
         border-radius: 2rem;
-        background-color: rgba(196, 196, 196, 1);
+        background-color: rgba(254, 101, 43, 0.99);
 
         box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 1);
 
         font: var(--regular-font);
-        color: #000;
+        color: #fff;
+
+        transition: .3s;
+
+        &:disabled {
+          background-color: rgba(196, 196, 196, 1);
+          color: #000;
+        }
       }
 
       p {
@@ -87,6 +94,13 @@
 
     font: var(--regular-font);
     color: #fff;
+
+    transition: .3s;
+
+    &:disabled {
+      background-color: rgba(196, 196, 196, 1);
+      color: #000;
+    }
   }
 
   img:nth-child(4) {

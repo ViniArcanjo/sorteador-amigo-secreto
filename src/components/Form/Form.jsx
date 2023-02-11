@@ -6,8 +6,11 @@ import bags from '../../assets/images/sacolas.png';
 
 import { useRef, useState } from 'react';
 import { useForm } from '../../context/FormContext/useForm';
+import { useNavigate } from 'react-router-dom';
 
 export function Form() {
+  const navigate = useNavigate();
+
   const { participantsList, addParticipant, error } = useForm();
 
   const [inputValue, setInputValue] = useState('');
@@ -28,7 +31,7 @@ export function Form() {
   }
 
   function handleStartButtonClick() {
-    return;
+    navigate('/sortear');
   }
 
   return (

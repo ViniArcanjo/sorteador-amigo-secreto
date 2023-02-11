@@ -1,10 +1,20 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import FormProvider from '../../context/FormContext/FormContext';
+import { act } from 'react-dom/test-utils';
 
+import { FormContext } from '../../context/FormContext/FormContext';
+import FormProvider from '../../context/FormContext/FormContext';
 import { Form } from './Form';
 
+const mockUseNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => {
+  return { useNavigate: () => mockUseNavigate };
+});
+
 describe('<Form />', () => {
+  const user = userEvent.setup({ delay: null });
+
   function renderForm() {
     return render(
       <FormProvider>
@@ -26,8 +36,6 @@ describe('<Form />', () => {
   });
 
   it('quando o input estiver preenchido, deve adicionar o participante indicado no input', async () => {
-    const user = userEvent.setup();
-
     renderForm();
 
     const input = screen.getByPlaceholderText(
@@ -47,8 +55,6 @@ describe('<Form />', () => {
   });
 
   it('quando tentar adicionar um participante que já existe, uma mensagem de erro deve ser exibida', async () => {
-    const user = userEvent.setup();
-
     renderForm();
 
     const input = screen.getByPlaceholderText(
@@ -68,8 +74,8 @@ describe('<Form />', () => {
     );
   });
 
-  it('quando disparada a mensagem de erro, deve ficar na tela por apenas 1s', async () => {
-    const user = userEvent.setup({ delay: null });
+  it('quando disparada a mensagem de erro, deve ficar na tela por apenas 2s', async () => {
+    jest.useFakeTimers();
 
     renderForm();
 
@@ -87,12 +93,63 @@ describe('<Form />', () => {
 
     expect(errorMessage).toBeInTheDocument();
 
-    setTimeout(() => {
-      errorMessage = screen.queryByRole('alert');
-    }, 2000);
+    act(() => jest.runAllTimers());
 
-    setTimeout(() => {
-      expect(errorMessage).toBeNull();
-    }, 3000);
+    errorMessage = screen.queryByRole('alert');
+
+    expect(errorMessage).toBeNull();
+  });
+
+  it('quando o tamanho da lista de participantes for menor que 3, o botão de Iniciar Brincadeira deve estar desabilitado', async () => {
+    renderForm();
+
+    const input = screen.getByPlaceholderText(
+      'Insira o nome dos participantes',
+    );
+    const button = screen.getAllByRole('button');
+
+    expect(button[1]).toBeDisabled();
+
+    await user.type(input, 'Vinicuius');
+    await user.click(button[0]);
+    await user.type(input, 'Igor');
+    await user.click(button[0]);
+    await user.type(input, 'Luciano');
+    await user.click(button[0]);
+    await user.type(input, 'Ilka');
+    await user.click(button[0]);
+
+    expect(button[1]).not.toBeDisabled();
+  });
+
+  it('quando o tamanho da lista de participantes for maior ou igual a 3, o botão de Iniciar Brincadeira deve estar habilitado', async () => {
+    const participantsList = ['Vinicius', 'Igor', 'Luciano', 'Ilka'];
+
+    render(
+      <FormContext.Provider value={{ participantsList }}>
+        <Form />;
+      </FormContext.Provider>,
+    );
+
+    const button = screen.getAllByRole('button');
+
+    expect(button[1]).not.toBeDisabled();
+  });
+
+  it('quando habilitado, o botão de Iniciar Brincadeira deve navegar até a página da bricadeira', async () => {
+    const participantsList = ['Vinicius', 'Igor', 'Luciano', 'Ilka'];
+
+    render(
+      <FormContext.Provider value={{ participantsList }}>
+        <Form />;
+      </FormContext.Provider>,
+    );
+
+    const button = screen.getAllByRole('button');
+
+    await user.click(button[1]);
+
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockUseNavigate).toHaveBeenCalledWith('/sortear');
   });
 });
