@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import FormProvider from '../../context/FormContext/FormContext';
+import FormProvider from './FormContext';
 
-import { Form } from './Form';
+import { Form } from '../../components/Form/Form';
 
 let mockParticipantsList = [];
 let mockError = '';
@@ -9,7 +9,7 @@ const mockAddParticipants = jest.fn();
 
 const mockUseNavigate = jest.fn();
 
-jest.mock('../../context/FormContext/FormContextBuilder', () => {
+jest.mock('./FormContextBuilder', () => {
   return {
     FormContextBuilder: () => ({
       participantsList: mockParticipantsList,
