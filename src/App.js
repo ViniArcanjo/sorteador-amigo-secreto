@@ -1,10 +1,12 @@
 import style from './App.module.scss';
-import { Header } from './components/Header/Header';
-import { Form } from './components/Form/Form';
-import Card from './components/Card';
-import FormProvider from './context/FormContext/FormContext';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { Header } from './components/Header/Header';
+import { AddParticipantsPage } from './pages/AddParticipantsPage/AddParticipantsPage';
+import { PlayPage } from './pages/PlayPage/PlayPage';
+
+import FormProvider from './context/FormContext/FormContext';
 
 function App() {
   return (
@@ -13,15 +15,8 @@ function App() {
       <FormProvider>
         <BrowserRouter>
           <Routes>
-            <Route
-              path='/'
-              element={
-                <Card>
-                  <Form />
-                </Card>
-              }
-            />
-            <Route path='/sortear' element={<Card></Card>} />
+            <Route path='/' element={<AddParticipantsPage />} />
+            <Route path='/sortear' element={<PlayPage />} />
           </Routes>
         </BrowserRouter>
       </FormProvider>

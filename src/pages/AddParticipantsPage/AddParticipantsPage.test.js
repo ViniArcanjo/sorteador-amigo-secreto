@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import FormProvider from '../../context/FormContext/FormContext';
-import { StartConfigPage } from './StartConfigPage';
+import { AddParticipantsPage } from './AddParticipantsPage';
 
 const mockUseNavigate = jest.fn();
 
@@ -15,7 +15,7 @@ describe('<StartConfigPage />', () => {
   it('deve renderizar todos os componentes na ordem correta', () => {
     const { container } = render(
       <FormProvider>
-        <StartConfigPage />
+        <AddParticipantsPage />
       </FormProvider>,
     );
 

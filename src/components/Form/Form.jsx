@@ -1,12 +1,14 @@
 import style from './Form.module.scss';
 
-import { List } from '../List/List';
 import person_add from '../../assets/images/person_add.png';
 import bags from '../../assets/images/sacolas.png';
 
 import { useRef, useState } from 'react';
-import { useForm } from '../../context/FormContext/useForm';
+
 import { useNavigate } from 'react-router-dom';
+
+import { List } from '../List/List';
+import { useForm } from '../../context/FormContext/useForm';
 
 export function Form() {
   const navigate = useNavigate();
