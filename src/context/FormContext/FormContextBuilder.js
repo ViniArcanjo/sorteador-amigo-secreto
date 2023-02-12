@@ -35,7 +35,7 @@ export const FormContextBuilder = ([
     for (let index = 0; index < allParticipants; index++) {
       const drawnIndex = index === allParticipants - 1 ? 0 : index + 1;
 
-      pairs.set(shuffled[index], shuffled(drawnIndex));
+      pairs.set(shuffled[index], shuffled[drawnIndex]);
     }
 
     return pairs;
@@ -47,7 +47,6 @@ export const FormContextBuilder = ([
     error,
     addParticipant: (participant) =>
       setParticipantsList(add(participantsList, participant)),
-    shuffleParticipants: (participantsList) =>
-      setPairs(raffle(participantsList)),
+    raffleParticipants: (list) => setPairs(raffle(list)),
   };
 };
